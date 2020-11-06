@@ -2,13 +2,13 @@ import 'package:quarantime/model/movie_response.dart';
 import 'package:quarantime/repository/repository.dart';
 import 'package:rxdart/subjects.dart';
 
-class MoviesListBloc {
+class NowPlayingListBloc {
   final MovieRepository _repository = MovieRepository();
   final BehaviorSubject<MovieResponse> _subject =
-      BehaviorSubject<MovieResponse>();
+  BehaviorSubject<MovieResponse>();
 
   getMovies() async {
-    MovieResponse response = await _repository.getMovies();
+    MovieResponse response = await _repository.getPlayingMovies();
     _subject.sink.add(response);
   }
 
@@ -19,4 +19,4 @@ class MoviesListBloc {
   BehaviorSubject<MovieResponse> get subject => _subject;
 }
 
-final moviesBloc = MoviesListBloc();
+final nowPlayingMoviesBloc = NowPlayingListBloc();

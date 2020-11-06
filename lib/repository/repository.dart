@@ -48,7 +48,7 @@ class MovieRepository {
     }
   }
 
-  Future<PersonResponse> getPerson() async {
+  Future<PersonResponse> getPersons() async {
     var params = {"api_key": apiKey};
     try {
       Response response =

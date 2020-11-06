@@ -1,22 +1,29 @@
+import 'package:flutter/material.dart';
 import 'package:quarantime/model/movie_response.dart';
 import 'package:quarantime/repository/repository.dart';
 import 'package:rxdart/subjects.dart';
 
-class MoviesListBloc {
+class MoviesListByGenreBloc {
   final MovieRepository _repository = MovieRepository();
   final BehaviorSubject<MovieResponse> _subject =
       BehaviorSubject<MovieResponse>();
 
-  getMovies() async {
-    MovieResponse response = await _repository.getMovies();
+  getMoviesByGenre(int id) async {
+    MovieResponse response = await _repository.getMovieByGenre(id);
     _subject.sink.add(response);
   }
 
-  dispose() {
+  void drainStream() {
+    _subject.value = null;
+  }
+
+  @mustCallSuper
+  void dispose() async {
+    await _subject.drain();
     _subject.close();
   }
 
   BehaviorSubject<MovieResponse> get subject => _subject;
 }
 
-final moviesBloc = MoviesListBloc();
+final moviesByGenreBloc = MoviesListByGenreBloc();
